@@ -628,10 +628,10 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// set src for static map
 			console.log("lat and lng for the static map:");
-			console.log(SeaGrant_Proto.detailView);
+			console.log(WhatsFresh.detailView);
 			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
 			console.log(dest);
-			SeaGrant_Proto.statmap.setSrc(dest);
+			WhatsFresh.statmap.setSrc(dest);
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -786,7 +786,13 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			// Sets the title of the header on detail page
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+			console.log('Checking index for location data');
+			console.log(detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ detailView.items.items[1]._data.lat +','+ detailView.items.items[1]._data.lng;
+			console.log(dest);
+			WhatsFresh.statmap.setSrc(dest);
 			if(WhatsFresh.backFlag === 0){
+
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index; 
@@ -802,7 +808,8 @@ Ext.define('WhatsFresh.controller.List', {
 	        			num2 = w;
 	        		}
 	        	}
-	       		detailView.items.items[2].select(storeInventory.data.all[num2]);
+	        	console.log(detailView.items);
+	       		detailView.items.items[3].select(storeInventory.data.all[num2]);
 	        	Ext.Viewport.animateActiveItem(detailView, this.slideRightTransition);
 	        }
 		}		
@@ -864,7 +871,7 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.infowindowFlag = 0;
 
 		WhatsFresh.detailView = this.getDetailView();
-		WhatsFresh.statmap = SeaGrant_Proto.detailView.getComponent('staticmap');
+		WhatsFresh.statmap = WhatsFresh.detailView.getComponent('staticmap');
 		// console.log("init");
 	}
 });
