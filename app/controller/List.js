@@ -626,6 +626,12 @@ Ext.define('WhatsFresh.controller.List', {
 				};
 				storeInventory.add(newpro);
 			}
+			// set src for static map
+			console.log("lat and lng for the static map:");
+			console.log(SeaGrant_Proto.detailView);
+			var dest = 'http://maps.googleapis.com/maps/api/staticmap?center='+ index.data.lat +','+ index.data.lng +'&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C'+ index.data.lat +','+ index.data.lng;
+			console.log(dest);
+			SeaGrant_Proto.statmap.setSrc(dest);
 			// for stack that tracks navigaion
 			WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 			WhatsFresh.pvalue[WhatsFresh.pcount] = index;
@@ -856,6 +862,9 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.use = 1;
 		WhatsFresh.use2 = 1;
 		WhatsFresh.infowindowFlag = 0;
+
+		WhatsFresh.detailView = this.getDetailView();
+		WhatsFresh.statmap = SeaGrant_Proto.detailView.getComponent('staticmap');
 		// console.log("init");
 	}
 });
